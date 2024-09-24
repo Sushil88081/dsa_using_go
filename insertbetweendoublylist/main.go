@@ -30,6 +30,26 @@ func CreateList(head *DoublyList, value int) *DoublyList {
 	return head
 }
 
+func InsertBetween(head *DoublyList, value int, position int) *DoublyList {
+	newNode := &DoublyList{data: value, next: nil, prev: nil}
+	ptr := head
+	if head == nil {
+		return newNode
+	}
+
+	for i := 1; i < position-1 && ptr.next != nil; i++ {
+		ptr = ptr.next
+
+	}
+
+	newNode.prev = ptr
+	newNode.next = ptr.next
+	ptr.next = newNode
+	ptr.next.next.prev = newNode
+	return head
+
+}
+
 // PrintList prints the list in both directions
 func PrintList(head *DoublyList) {
 	fmt.Print("Forward: ")
@@ -38,19 +58,6 @@ func PrintList(head *DoublyList) {
 	}
 	fmt.Println("nil")
 
-	// To print in reverse
-	fmt.Print("Backward: ")
-	temp := head
-	// Traverse to the end
-	for temp.next != nil {
-		temp = temp.next
-	}
-	// Print backwards
-	for temp != nil {
-		fmt.Printf("%d <-> ", temp.data)
-		temp = temp.prev
-	}
-	fmt.Println("nil")
 }
 
 func main() {
@@ -61,5 +68,12 @@ func main() {
 		fmt.Scan(&value)
 		head = CreateList(head, value)
 	}
+	PrintList(head)
+	fmt.Println("Enter values which you insert at any specific position of list:")
+	fmt.Scan(&value)
+	var position int
+	fmt.Println("Enter position to insert")
+	fmt.Scan(&position)
+	head = InsertBetween(head, value, position)
 	PrintList(head)
 }

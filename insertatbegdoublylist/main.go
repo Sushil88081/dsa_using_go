@@ -30,6 +30,19 @@ func CreateList(head *DoublyList, value int) *DoublyList {
 	return head
 }
 
+func InsertAtBeg(head *DoublyList, value int) *DoublyList {
+	var prev *DoublyList = nil
+	var next *DoublyList = nil
+	newNode := &DoublyList{data: value, prev: prev, next: next}
+
+	newNode.prev = head
+	newNode.next = head
+	head = newNode
+
+	return head
+
+}
+
 // PrintList prints the list in both directions
 func PrintList(head *DoublyList) {
 	fmt.Print("Forward: ")
@@ -38,19 +51,6 @@ func PrintList(head *DoublyList) {
 	}
 	fmt.Println("nil")
 
-	// To print in reverse
-	fmt.Print("Backward: ")
-	temp := head
-	// Traverse to the end
-	for temp.next != nil {
-		temp = temp.next
-	}
-	// Print backwards
-	for temp != nil {
-		fmt.Printf("%d <-> ", temp.data)
-		temp = temp.prev
-	}
-	fmt.Println("nil")
 }
 
 func main() {
@@ -61,5 +61,9 @@ func main() {
 		fmt.Scan(&value)
 		head = CreateList(head, value)
 	}
+	PrintList(head)
+	fmt.Println("Enter values which you insert at begining of list:")
+	fmt.Scan(&value)
+	head = InsertAtBeg(head, value)
 	PrintList(head)
 }
